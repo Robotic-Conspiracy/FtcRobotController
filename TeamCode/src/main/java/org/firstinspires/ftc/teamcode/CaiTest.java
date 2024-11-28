@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 @TeleOp
 @Config
 public class CaiTest extends LinearOpMode {
@@ -30,13 +28,13 @@ public class CaiTest extends LinearOpMode {
 
     //Road Runner Dashboard
     private final FtcDashboard dashboard = FtcDashboard.getInstance();
-    private MultipleTelemetry telemetry;
-
     // Runtime modifiable values
     // IF YOU CHANGE TELL PEOPLE!!! vvvvv (people might stab you if you don't)
 
     // Runtime modifiable values should be public static
     public static double triggerModifier = 0.005;
+    public static int precisionThreshold = 5;
+    public static double precisionValue = 0.4;
     /*
     private final int swap  = -329;
 
@@ -148,9 +146,9 @@ public class CaiTest extends LinearOpMode {
         telemetry.addData("Trigger Modifier", triggerModifier);
         //other
         telemetry.addData("left stick y", gamepad2.left_stick_y);
-        telemetry.addData("motor set position to move to", arm_rotator_motor.getTargetPosition());
         telemetry.addData("tps", tps);
-
+        telemetry.addData("Tacos", tacos);
+        telemetry.addData("Arm Motor", arm_rotator_motor.getMotorType());
         //update telemetry
         telemetry.update();
     }
@@ -167,15 +165,19 @@ public class CaiTest extends LinearOpMode {
     public void update_arm_rotation(){
         //arm_rotator_motor.setPower(gamepad2.left_stick_y*((gamepad2.left_stick_y > 0 ? 0.7 : 0.6)) *-1);
 
-        if(tacos == 40) {
-            arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((gamepad2.left_stick_y * -10)));
+        //if(tacos == 40) {
+            arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((gamepad2.left_stick_y * -1)));
 
             arm_rotator_motor.setTargetPosition(arm_target);
-            arm_rotator_motor.setPower(1);
+            if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < precisionThreshold){ //prevent autocorrecting at full power
+                arm_rotator_motor.setPower(precisionValue);
+            } else {
+                arm_rotator_motor.setPower(1);
+            }
             arm_rotator_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             tacos = 0;
-        }else{
-            tacos++;
+        //}else{
+          //  tacos++;
         }
         /*if(arm_rotator_motor.getCurrentPosition() >= swap){
             if (gamepad2.left_stick_y > 0){
@@ -191,7 +193,7 @@ public class CaiTest extends LinearOpMode {
             }
         }*/
 
-    }
+    //}
     public void update_grip(){
         /*if (gamepad2.left_bumper){
             hand_grip_servo.setPosition(hand_grip_servo.getPosition() + triggerModifier);
