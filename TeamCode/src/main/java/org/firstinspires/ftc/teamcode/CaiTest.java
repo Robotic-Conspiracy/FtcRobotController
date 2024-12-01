@@ -42,7 +42,11 @@ public class CaiTest extends LinearOpMode {
     public static int cutoffThreshold = 8;
     public static double DegreesPerSec = 552;
 
-    public static PIDFCoefficients PIDF = new PIDFCoefficients(10.000000, 3.000000, 0.000000, 0.000000, MotorControlAlgorithm.PIDF);
+    public static double P = 4.872;
+    public static double I = 0;
+    public static double D = 0.002;
+    public static double F = 46.8201;
+            
     /*
     private final int swap  = -329;
 
@@ -107,11 +111,11 @@ public class CaiTest extends LinearOpMode {
         arm_extender_motor = hardwareMap.get(DcMotor.class, "arm_extender");
         arm_rotator_motor = hardwareMap.get(DcMotorEx.class, "arm_control");
         arm_rotator_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        arm_rotator_motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        arm_rotator_motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER); //Set current pos to 0
+        arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER); //allow run to position.
         // THERE IS A BUNCH OF MATH INVOLVED HERE, READ THE FTC DOCS OF PIDF AND ASK @GoldStar184 BEFORE CHANGING
-        arm_rotator_motor.setVelocityPIDFCoefficients(4.872, 0.4683, 0.002,46.8201);
-        arm_rotator_motor.setPositionPIDFCoefficients(6);
+        //arm_rotator_motor.setVelocityPIDFCoefficients(P, I, D, F);
+        //arm_rotator_motor.setPositionPIDFCoefficients(6);
         arm_rotator_motor.setTargetPositionTolerance(0); //NOTE: Value in encoder ticks
         // END COMPLICATED MATH SECTION
     }
@@ -163,7 +167,6 @@ public class CaiTest extends LinearOpMode {
         telemetry.addData("Tacos", tacos);
         telemetry.addData("Arm Enabled",  arm_rotator_motor.isMotorEnabled());
         telemetry.addData("Velocity", arm_rotator_motor.getVelocity(AngleUnit.DEGREES));
-        telemetry.addData("PIDF", arm_rotator_motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
         //update telemetry
         telemetry.update();
     }
