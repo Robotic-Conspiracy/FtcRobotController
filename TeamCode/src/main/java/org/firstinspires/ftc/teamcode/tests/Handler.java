@@ -56,16 +56,21 @@ public class Handler{
         return telemetry;
     }
 
+    public Telemetry displayChangableVars(Telemetry telemetry){
+        telemetry.addData("Wheel speed", movement.getSpeed());
+        return telemetry;
+    }
+
     public void update(Gamepad gamepad1, Gamepad gamepad2){
         if (Arm_active){
-            //nothing yet
+            //arm1.rotate(gamepad2.left_stick_y);
         }
         if (Hand_active){
             hand.grip(gamepad2.a, gamepad2.b);
 
         }
         if(Movement_active){
-            // nothing yet
+            movement.update(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         }
     }
 }
