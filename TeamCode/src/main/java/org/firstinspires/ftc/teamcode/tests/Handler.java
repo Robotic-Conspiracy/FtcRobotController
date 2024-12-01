@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,17 +12,19 @@ import java.util.HashMap;
 public class Handler{
     public static HashMap<String, Boolean> activeModules = new HashMap<>();
 
-    private Servo hand_rotator;
-    private Servo hand_grip;
     //public Arm arm = new Arm();
     private Hand hand;
-    public void initilize(){
-        activeModules.put("Arm", true);
-        activeModules.put("Hand", true);
-        activeModules.put("Movement", true);
-    }
+    private Movement movement;
+    private Arm arm1;
+    public static boolean Arm_active = true;
+    public static boolean Hand_active = true;
+    public static boolean Movement_active = true;
+
     public void initilize_hand(Servo hand_rotator, Servo hand_grip){
         this.hand = new Hand(hand_rotator, hand_grip);
+    }
+    public void initilize_movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
+        this.movement = new Movement(front_left_wheel, front_right_wheel, back_left_wheel, back_right_wheel);
     }
     /***
      *
@@ -29,25 +32,37 @@ public class Handler{
      * used to disable a module
      */
     public void dissableModule(String Module){
-        activeModules.replace(Module, false);
+        switch (Module){
+            case "Arm":
+                Arm_active = false;
+                break;
+            case "Hand":
+                Hand_active = false;
+                break;
+            case "Movement":
+                Movement_active = false;
+                break;
+            default:
+                break;
+        }
     }
 
     public Telemetry displayActiveModules(Telemetry telemetry){
-        telemetry.addData("Arm", activeModules.get("Arm"));
-        telemetry.addData("Hand", activeModules.get("Hand"));
-        telemetry.addData("Movement", activeModules.get("Movement"));
+        telemetry.addData("Arm module", Arm_active);
+        telemetry.addData("Hand module", Hand_active);
+        telemetry.addData("Movement module", Movement_active);
         return telemetry;
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2){
-        if (Boolean.TRUE.equals(activeModules.get("Arm"))){
+        if (Arm_active){
             //nothing yet
         }
-        if (Boolean.TRUE.equals(activeModules.get("Hand"))){
+        if (Hand_active){
             hand.grip(gamepad2.a, gamepad2.b);
 
         }
-        if(Boolean.TRUE.equals(activeModules.get("Movement"))){
+        if(Movement_active){
             // nothing yet
         }
     }

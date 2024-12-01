@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -16,8 +17,13 @@ public class Main extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         waitForStart();
-        handler.initilize();
         handler.initilize_hand(hardwareMap.get(Servo.class, "hand_rotator"), hardwareMap.get(Servo.class, "hand_servo"));
+        handler.initilize_movement(
+                hardwareMap.get(DcMotor.class, "front_left_wheel"),
+                hardwareMap.get(DcMotor.class, "front_right_wheel"),
+                hardwareMap.get(DcMotor.class, "back_left_wheel"),
+                hardwareMap.get(DcMotor.class, "back_right_wheel")
+        );
         handler.dissableModule("Movement");
         handler.dissableModule("Arm");
         if(opModeIsActive()) {
