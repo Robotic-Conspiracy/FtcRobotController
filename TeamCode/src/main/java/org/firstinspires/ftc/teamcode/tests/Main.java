@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.tests.Handler;
-@TeleOp
+@TeleOp(name = "OOP Loop")
 public class Main extends LinearOpMode {
 
     private static final Handler handler = new Handler();

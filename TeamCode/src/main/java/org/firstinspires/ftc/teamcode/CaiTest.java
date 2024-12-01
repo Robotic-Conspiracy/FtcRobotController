@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp
+@TeleOp(group = "old")
 @Config
 public class CaiTest extends LinearOpMode {
     //Hand Servos

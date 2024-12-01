@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp
+@TeleOp(group = "old")
 @Config
 public class UpdatedMain extends LinearOpMode {
     //Hand Servos

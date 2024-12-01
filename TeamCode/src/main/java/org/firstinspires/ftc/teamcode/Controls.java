@@ -9,8 +9,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@TeleOp
-@Disabled
+@TeleOp(group = "old")
 public class Controls extends LinearOpMode {
     private DcMotor Front_Left_Wheel;
     private DcMotor Back_Left_Wheel;

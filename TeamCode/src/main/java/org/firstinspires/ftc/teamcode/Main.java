@@ -14,8 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.HashMap;
 
-@TeleOp
-@Disabled
+@TeleOp(name = "spaghetti", group = "old")
 public class Main extends LinearOpMode {
 
 

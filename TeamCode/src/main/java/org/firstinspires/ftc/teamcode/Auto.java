@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.HashMap;
 
-@Autonomous
+@Autonomous()
 public class Auto extends LinearOpMode {
     private Servo Hand_Rotator_Servo; // rotates the hand
     private Servo Hand_Servo;// open and closes the hand
