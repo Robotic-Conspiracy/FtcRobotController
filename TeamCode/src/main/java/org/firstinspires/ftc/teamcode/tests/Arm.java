@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class Arm extends RobotModule{
@@ -38,6 +37,9 @@ public class Arm extends RobotModule{
         arm_rotator_motor.setTargetPosition(arm_target);
         arm_rotator_motor.setPower(1);
         arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    }
+    public void extend(double right_stick_y){
+        arm_extender_motor.setPower(right_stick_y * -1);
     }
 
 }

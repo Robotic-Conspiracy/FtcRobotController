@@ -71,6 +71,7 @@ public class Handler{
     public void update(Gamepad gamepad1, Gamepad gamepad2){
         if (Arm_active){
             arm.rotate(gamepad2.left_stick_y);
+            arm.extend(gamepad2.right_stick_y);
         }
         if (Hand_active){
             hand.grip(gamepad2.a, gamepad2.b);
