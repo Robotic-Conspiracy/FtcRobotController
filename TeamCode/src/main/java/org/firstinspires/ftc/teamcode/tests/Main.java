@@ -22,8 +22,12 @@ public class Main extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "back_left_wheel"),
                 hardwareMap.get(DcMotor.class, "back_right_wheel")
         );
+        handler.initialize_arm(
+                //for slower speed but steady change arm_rotator_motor to be DcMotorEx.class
+                hardwareMap.get(DcMotor.class, "arm_rotator_motor"),
+                hardwareMap.get(DcMotor.class, "arm_extender" )
+        );
         handler.disableModule("Movement");
-        handler.disableModule("Arm");
         if(opModeIsActive()) {
             while (opModeIsActive()) {
                 handler.update(gamepad1, gamepad2);

@@ -27,6 +27,9 @@ public class Handler{
     public void initialize_movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
         this.movement = new Movement(front_left_wheel, front_right_wheel, back_left_wheel, back_right_wheel);
     }
+    public void initialize_arm(DcMotor arm_rotator_motor, DcMotor arm_extender_motor){
+        this.arm = new Arm(arm_rotator_motor, arm_extender_motor);
+    }
     /***
      *
      * @param Module the module you want to disable
