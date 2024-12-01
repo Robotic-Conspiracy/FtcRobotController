@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Gamepad;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
-public class Arm {
+public class Arm extends RobotModule{
     public static double P = 10;
     public static double I = 0;
     public static double D = 0.002;
@@ -41,4 +39,5 @@ public class Arm {
         arm_rotator_motor.setPower(1);
         arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
+
 }

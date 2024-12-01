@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
-public class Movement  {
+public class Movement extends RobotModule{
     private DcMotor front_left_wheel;
     private DcMotor front_right_wheel;
     private DcMotor back_left_wheel;

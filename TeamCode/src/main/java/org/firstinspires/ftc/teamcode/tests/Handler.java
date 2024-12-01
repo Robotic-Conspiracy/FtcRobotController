@@ -62,7 +62,12 @@ public class Handler{
         telemetry.addData("Wheel speed", movement.getSpeed());
         return telemetry;
     }
-
+    public Telemetry getTelemetry(Telemetry telemetry){
+        telemetry = arm.telemetry(telemetry);
+        telemetry = hand.telemetry(telemetry);
+        telemetry = movement.telemetry(telemetry);
+        return telemetry;
+    }
     public void update(Gamepad gamepad1, Gamepad gamepad2){
         if (Arm_active){
             arm.rotate(gamepad2.left_stick_y);

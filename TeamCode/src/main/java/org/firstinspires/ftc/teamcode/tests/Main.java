@@ -35,6 +35,7 @@ public class Main extends LinearOpMode {
                 handler.update(gamepad1, gamepad2);
                 telemetry = handler.displayActiveModules(telemetry);
                 telemetry = handler.displayChangableVars(telemetry);
+                telemetry = handler.getTelemetry(telemetry);
                 telemetry.update();
             }
         }

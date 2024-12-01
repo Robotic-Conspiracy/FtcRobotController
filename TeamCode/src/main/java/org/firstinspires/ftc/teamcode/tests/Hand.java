@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 @Config
 
-public class Hand{
+public class Hand extends RobotModule{
     private Servo Hand_rotator;
     private  Servo Hand_Grip;
     private  CRServo hand;
