@@ -1,17 +1,19 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.HashMap;
-
+@Config
 public class Handler{
     public static HashMap<String, Boolean> activeModules = new HashMap<>();
 
+    private Servo hand_rotator;
+    private Servo hand_grip;
     //public Arm arm = new Arm();
     private Hand hand;
     private Movement movement;

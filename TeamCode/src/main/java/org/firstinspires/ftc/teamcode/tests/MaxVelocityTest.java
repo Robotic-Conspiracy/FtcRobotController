@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp
+@TeleOp(group = "Z_ PDIF TESTS")
 public class MaxVelocityTest extends LinearOpMode {
     DcMotorEx motor;
     double currentVelocity;

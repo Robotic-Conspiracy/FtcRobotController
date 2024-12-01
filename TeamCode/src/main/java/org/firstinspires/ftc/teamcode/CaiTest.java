@@ -38,11 +38,11 @@ public class CaiTest extends LinearOpMode {
     // Runtime modifiable values should be public static
     public static double triggerModifier = 0.005;
     public static int precisionThreshold = 20;
-    public static double precisionValue = 0.5;
+    public static double precisionValue = 0.7;
     public static int cutoffThreshold = 8;
     public static double DegreesPerSec = 552;
 
-    public static double P = 4.872;
+    public static double P = 10;
     public static double I = 0;
     public static double D = 0.002;
     public static double F = 46.8201;
@@ -111,12 +111,14 @@ public class CaiTest extends LinearOpMode {
         arm_extender_motor = hardwareMap.get(DcMotor.class, "arm_extender");
         arm_rotator_motor = hardwareMap.get(DcMotorEx.class, "arm_control");
         arm_rotator_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        arm_rotator_motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER); //Set current pos to 0
-        arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER); //allow run to position.
+        arm_rotator_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //Set current pos to 0
+        arm_rotator_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //allow run to position.
         // THERE IS A BUNCH OF MATH INVOLVED HERE, READ THE FTC DOCS OF PIDF AND ASK @GoldStar184 BEFORE CHANGING
-        //arm_rotator_motor.setVelocityPIDFCoefficients(P, I, D, F);
-        //arm_rotator_motor.setPositionPIDFCoefficients(6);
-        arm_rotator_motor.setTargetPositionTolerance(0); //NOTE: Value in encoder ticks
+
+        arm_rotator_motor.setVelocityPIDFCoefficients(P, I, D, F);
+        arm_rotator_motor.setPositionPIDFCoefficients(8);
+        //arm_rotator_motor.setTargetPositionTolerance(0); //NOTE: Value in encoder ticks
+
         // END COMPLICATED MATH SECTION
     }
 
@@ -186,17 +188,10 @@ public class CaiTest extends LinearOpMode {
 
         //if(tacos == 40) {
         arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((gamepad2.left_stick_y * -1)));
-        arm_rotator_motor.setVelocity(DegreesPerSec, AngleUnit.DEGREES);
         arm_rotator_motor.setTargetPosition(arm_target);
 
-        /*if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < precisionThreshold){ //prevent autocorrecting at full power
-            arm_rotator_motor.setPower(precisionValue);
-        } else if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < cutoffThreshold ){ // "its close enough"
-            arm_rotator_motor.setPower(0);
-        } else{
+        arm_rotator_motor.setPower(1);
 
-        }//
-         */
         //*/
         arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
