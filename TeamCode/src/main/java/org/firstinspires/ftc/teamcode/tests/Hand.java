@@ -3,11 +3,15 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 @Config
+
 public class Hand{
-    private final Servo Hand_rotator;
-    private final Servo Hand_Grip;
+    private Servo Hand_rotator;
+    private  Servo Hand_Grip;
+    private  CRServo hand;
+    private final int item;
     /**
      * @param rotator_name the name of the rotation servo
      * @param hand_name the name of the hands grip servo
@@ -15,17 +19,27 @@ public class Hand{
     public Hand(Servo rotator_name, Servo hand_name){
         this.Hand_Grip = hand_name;
         this.Hand_rotator = rotator_name;
+        this.item = 0;
+    }
+    public Hand(CRServo hand){
+        this.hand = hand;
+        this.item = 1;
     }
 
     /**
      * used to update the hands grip the hand
      * */
     public void grip(boolean left, boolean right){
+        if (this.item == 0){
+            this.Hand_Grip.setPosition(
+                    this.Hand_Grip.getPosition() + (left ? 0.1 : (right ? -0.1 : 0))
+            );
+        } else {
+            this.hand.setPower((left ? 0.5 : 0)+(right ? -0.5: 0));
+        }
 
-        this.Hand_Grip.setPosition(
-                this.Hand_Grip.getPosition() + (left ? 0.1 : (right ? -0.1 : 0))
-        );
     }
+
 
     /**
      *
