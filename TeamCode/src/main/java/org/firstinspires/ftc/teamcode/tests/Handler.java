@@ -13,7 +13,7 @@ public class Handler{
 
     private Servo hand_rotator;
     private Servo hand_grip;
-    //public Arm arm = new Arm();
+
     private Hand hand;
     private Movement movement;
     private Arm arm;
