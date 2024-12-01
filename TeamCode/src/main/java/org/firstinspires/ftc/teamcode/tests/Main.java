@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.tests.Handler;
 @TeleOp
 public class Main extends LinearOpMode {
 
@@ -17,8 +15,8 @@ public class Main extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         waitForStart();
-        handler.initilize_hand(hardwareMap.get(Servo.class, "hand_rotator"), hardwareMap.get(Servo.class, "hand_servo"));
-        handler.initilize_movement(
+        handler.initialize_hand(hardwareMap.get(Servo.class, "hand_rotator"), hardwareMap.get(Servo.class, "hand_servo"));
+        handler.initialize_movement(
                 hardwareMap.get(DcMotor.class, "front_left_wheel"),
                 hardwareMap.get(DcMotor.class, "front_right_wheel"),
                 hardwareMap.get(DcMotor.class, "back_left_wheel"),

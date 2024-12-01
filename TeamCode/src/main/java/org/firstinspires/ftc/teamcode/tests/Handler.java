@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -17,15 +16,15 @@ public class Handler{
     //public Arm arm = new Arm();
     private Hand hand;
     private Movement movement;
-    private Arm arm1;
+    private Arm arm;
     public static boolean Arm_active = true;
     public static boolean Hand_active = true;
     public static boolean Movement_active = true;
 
-    public void initilize_hand(Servo hand_rotator, Servo hand_grip){
+    public void initialize_hand(Servo hand_rotator, Servo hand_grip){
         this.hand = new Hand(hand_rotator, hand_grip);
     }
-    public void initilize_movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
+    public void initialize_movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
         this.movement = new Movement(front_left_wheel, front_right_wheel, back_left_wheel, back_right_wheel);
     }
     /***
@@ -63,7 +62,7 @@ public class Handler{
 
     public void update(Gamepad gamepad1, Gamepad gamepad2){
         if (Arm_active){
-            //arm1.rotate(gamepad2.left_stick_y);
+            arm.rotate(gamepad2.left_stick_y);
         }
         if (Hand_active){
             hand.grip(gamepad2.a, gamepad2.b);
