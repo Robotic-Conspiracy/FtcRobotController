@@ -1,11 +1,10 @@
 package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.config.Config;
-
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
-@Config
 
+@Config
 public class Hand extends RobotModule{
     private Servo Hand_rotator;
     private  Servo Hand_Grip;
