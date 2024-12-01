@@ -5,10 +5,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
 @Config
@@ -17,7 +21,7 @@ public class CaiTest extends LinearOpMode {
     private Servo hand_rotation_servo;
     private Servo hand_grip_servo;
     //Arm Motors
-    private DcMotor arm_rotator_motor;
+    private DcMotorEx arm_rotator_motor;
     private DcMotor arm_extender_motor;
     //Wheels
     private DcMotor front_left_wheel;
@@ -33,8 +37,12 @@ public class CaiTest extends LinearOpMode {
 
     // Runtime modifiable values should be public static
     public static double triggerModifier = 0.005;
-    public static int precisionThreshold = 5;
-    public static double precisionValue = 0.4;
+    public static int precisionThreshold = 20;
+    public static double precisionValue = 0.5;
+    public static int cutoffThreshold = 8;
+    public static double DegreesPerSec = 552;
+
+    public static PIDFCoefficients PIDF = new PIDFCoefficients(10.000000, 3.000000, 0.000000, 0.000000, MotorControlAlgorithm.PIDF);
     /*
     private final int swap  = -329;
 
@@ -96,11 +104,16 @@ public class CaiTest extends LinearOpMode {
      * initialize the arms motors
      */
     public void initialize_arm(){
-        arm_rotator_motor = hardwareMap.get(DcMotor.class, "arm_control");
         arm_extender_motor = hardwareMap.get(DcMotor.class, "arm_extender");
+        arm_rotator_motor = hardwareMap.get(DcMotorEx.class, "arm_control");
         arm_rotator_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        arm_rotator_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm_rotator_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm_rotator_motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        // THERE IS A BUNCH OF MATH INVOLVED HERE, READ THE FTC DOCS OF PIDF AND ASK @GoldStar184 BEFORE CHANGING
+        arm_rotator_motor.setVelocityPIDFCoefficients(4.872, 0.4683, 0.002,46.8201);
+        arm_rotator_motor.setPositionPIDFCoefficients(6);
+        arm_rotator_motor.setTargetPositionTolerance(0); //NOTE: Value in encoder ticks
+        // END COMPLICATED MATH SECTION
     }
 
     /**
@@ -148,7 +161,9 @@ public class CaiTest extends LinearOpMode {
         telemetry.addData("left stick y", gamepad2.left_stick_y);
         telemetry.addData("tps", tps);
         telemetry.addData("Tacos", tacos);
-        telemetry.addData("Arm Motor", arm_rotator_motor.getMotorType());
+        telemetry.addData("Arm Enabled",  arm_rotator_motor.isMotorEnabled());
+        telemetry.addData("Velocity", arm_rotator_motor.getVelocity(AngleUnit.DEGREES));
+        telemetry.addData("PIDF", arm_rotator_motor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
         //update telemetry
         telemetry.update();
     }
@@ -163,21 +178,30 @@ public class CaiTest extends LinearOpMode {
     }
     private int tacos = 0;
     public void update_arm_rotation(){
-        //arm_rotator_motor.setPower(gamepad2.left_stick_y*((gamepad2.left_stick_y > 0 ? 0.7 : 0.6)) *-1);
+        //arm_rotator_motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, PIDF);
+        //arm_rotator_motor.setVelocity(gamepad2.left_stick_y * DegreesPerSec, AngleUnit.DEGREES);
 
         //if(tacos == 40) {
-            arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((gamepad2.left_stick_y * -1)));
+        arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((gamepad2.left_stick_y * -1)));
+        arm_rotator_motor.setVelocity(DegreesPerSec, AngleUnit.DEGREES);
+        arm_rotator_motor.setTargetPosition(arm_target);
 
-            arm_rotator_motor.setTargetPosition(arm_target);
-            if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < precisionThreshold){ //prevent autocorrecting at full power
-                arm_rotator_motor.setPower(precisionValue);
-            } else {
-                arm_rotator_motor.setPower(1);
-            }
-            arm_rotator_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            tacos = 0;
+        /*if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < precisionThreshold){ //prevent autocorrecting at full power
+            arm_rotator_motor.setPower(precisionValue);
+        } else if (Math.abs(arm_rotator_motor.getCurrentPosition() - arm_target) < cutoffThreshold ){ // "its close enough"
+            arm_rotator_motor.setPower(0);
+        } else{
+
+        }//
+         */
+        //*/
+        arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        //tacos = 0;
         //}else{
           //  tacos++;
+
+
         }
         /*if(arm_rotator_motor.getCurrentPosition() >= swap){
             if (gamepad2.left_stick_y > 0){
