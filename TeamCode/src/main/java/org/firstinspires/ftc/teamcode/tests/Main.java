@@ -22,8 +22,8 @@ public class Main extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "back_left_wheel"),
                 hardwareMap.get(DcMotor.class, "back_right_wheel")
         );
-        handler.dissableModule("Movement");
-        handler.dissableModule("Arm");
+        handler.disableModule("Movement");
+        handler.disableModule("Arm");
         if(opModeIsActive()) {
             while (opModeIsActive()) {
                 handler.update(gamepad1, gamepad2);

@@ -32,7 +32,7 @@ public class Handler{
      * @param Module the module you want to disable
      * used to disable a module
      */
-    public void dissableModule(String Module){
+    public void disableModule(String Module){
         switch (Module){
             case "Arm":
                 Arm_active = false;
