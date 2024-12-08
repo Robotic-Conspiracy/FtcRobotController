@@ -33,7 +33,7 @@ public class Main extends LinearOpMode {
             while (opModeIsActive()) {
                 handler.update(gamepad1, gamepad2);
                 telemetry = handler.displayActiveModules(telemetry);
-                telemetry = handler.displayChangableVars(telemetry);
+                telemetry = handler.displayChangeableVars(telemetry);
                 telemetry = handler.getTelemetry(telemetry);
                 telemetry.addData("test-T", Throw);
                 telemetry.update();
