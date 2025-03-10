@@ -1,0 +1,146 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+@TeleOp(group = "old")
+@Config
+public class SamTest extends LinearOpMode {
+
+    //Wheels
+    private DcMotor front_left_wheel;
+    private DcMotor back_left_wheel;
+    private DcMotor front_right_wheel;
+    private DcMotor back_right_wheel;
+    public static Double speed_modifer = 0.5; //min = 0.01, max = 1.0 
+    //use PWM for speed_modifer?
+    //output
+    private DcMotor output;
+    private servo output_servo;;
+    //intake
+    private DcMotor intake;
+    private servo intake_servo;
+
+    //Road Runner Dashboard
+    private final FtcDashboard dashboard = FtcDashboard.getInstance();
+    // Runtime modifiable values
+    // IF YOU CHANGE TELL PEOPLE!!! vvvvv (people might stab you if you don't)
+
+    // Runtime modifiable values should be public static
+    public static double triggerModifier = 0.005;
+    public static int precisionThreshold = 20;
+    public static double precisionValue = 0.7;
+    public static int cutoffThreshold = 8;
+    public static double DegreesPerSec = 552;
+
+    public static double P = 10;
+    public static double I = 0;
+    public static double D = 0.002;
+    public static double F = 46.8201;
+
+    /*
+    private final int swap  = -329;
+
+    private double up_speed = 0.7;
+    private double down_speed = 0.7;
+    */
+    // IF YOU CHANGE TELL PEOPLE!!! ^^^^^
+
+    // misc vars
+    
+
+    // tps calculations
+    private int runs = 0;
+    private double tps = 0;
+
+    //main loop
+    @Override
+    public void runOpMode() throws InterruptedException {
+        
+        //setting up motors
+        initialize_wheels(options.Set3);
+        //here in case it results in movement (no movement allowed during init TeleOp)
+       
+        //wait for start
+        waitForStart();
+        if(opModeIsActive()){
+            //set up timimgs
+            ElapsedTime time = new ElapsedTime();
+            time.reset();
+            while(opModeIsActive()){
+                update_driving();
+              
+                runs++;
+                if (time.seconds() > 1) {
+                    tps = runs / time.seconds();
+                    runs = 0;
+                    time.reset();
+                }
+            }
+        }
+    }
+  
+    /**
+     * initialize the wheels
+     */
+    public void initialize_wheels(options option){
+        front_left_wheel = hardwareMap.get(DcMotor.class, "front_left_wheel");
+        back_left_wheel = hardwareMap.get(DcMotor.class, "back_left_wheel");
+        front_right_wheel = hardwareMap.get(DcMotor.class, "front_right_wheel");
+        back_right_wheel = hardwareMap.get(DcMotor.class, "back_right_wheel");
+        switch (option){
+            case Set1:
+                back_left_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                back_right_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                front_left_wheel.setDirection(DcMotorSimple.Direction.REVERSE);
+                front_right_wheel.setDirection(DcMotorSimple.Direction.REVERSE);
+                break;
+            case Set2:
+                back_left_wheel.setDirection(DcMotorSimple.Direction.REVERSE);
+                back_right_wheel.setDirection(DcMotorSimple.Direction.REVERSE);
+                front_left_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                front_right_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                break;
+            case Set3:
+                back_left_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                back_right_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                front_left_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+                front_right_wheel.setDirection(DcMotorSimple.Direction.FORWARD);
+            default:
+                break;
+        }
+    public void initialize_intake(options option){
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        output = hardwareMap.get(DcMotor.class, "output");
+
+    }
+    public void update_driving(){
+        double left_stick_x = gamepad1.left_stick_x * -1;
+        double left_stick_y = gamepad1.left_stick_y;
+        double right_stick_x = gamepad1.right_stick_x;
+        back_left_wheel.setPower((((left_stick_y - left_stick_x)*-1) + right_stick_x)*speed_modifer);
+        back_right_wheel.setPower((((left_stick_y + left_stick_x)*-1) - right_stick_x)*speed_modifer;
+        front_left_wheel.setPower((((left_stick_y + left_stick_x)*-1) + right_stick_x)*speed_modifer5);
+        front_right_wheel.setPower((((left_stick_y - left_stick_x)*-1) - right_stick_x)*speed_modifer);
+        
+    }
+    public void update_intake()
+    
+    
+    
+    private enum options{
+        Set1,
+        Set2,
+        Set3
+    }
+}
