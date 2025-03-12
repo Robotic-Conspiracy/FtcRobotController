@@ -11,6 +11,7 @@ public class Movement extends RobotModule{
     private DcMotor back_left_wheel;
     private DcMotor back_right_wheel;
     public static double speed = 0.5;
+
     public Movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
         this.front_left_wheel = front_left_wheel;
         this.back_left_wheel = back_left_wheel;

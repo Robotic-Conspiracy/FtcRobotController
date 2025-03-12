@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Config
 public class Arm extends RobotModule{
-    public static double P = 10;
-    public static double I = 0;
-    public static double D = 0.002;
-    public static double F = 46.8201;
+    private static double P = 10;
+    private static double I = 0;
+    private static double D = 0.002;
+    private static double F = 46.8201;
     private final DcMotor arm_rotator_motor;
     private final DcMotor arm_extender_motor;
 
@@ -26,7 +26,7 @@ public class Arm extends RobotModule{
         this.arm_extender_motor = arm_extender_motor;
         arm_rotator_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm_rotator_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); //Set current pos to 0
-        arm_rotator_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //allow run to position.4
+        arm_rotator_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //allow run to position.
         // THERE IS A BUNCH OF MATH INVOLVED HERE, READ THE FTC DOCS OF PIDF AND ASK @GoldStar184 BEFORE CHANGING
 
         arm_rotator_motor.setVelocityPIDFCoefficients(P, I, D, F);
@@ -35,7 +35,7 @@ public class Arm extends RobotModule{
     public void rotate(double left_stick_y){
         int arm_target = (int) (arm_rotator_motor.getTargetPosition() + ((left_stick_y * -1)));
         arm_rotator_motor.setTargetPosition(arm_target);
-        arm_rotator_motor.setPower(1);
+        arm_rotator_motor.setPower(0.5);
         arm_rotator_motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
     public void extend(double right_stick_y){

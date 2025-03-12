@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Main extends LinearOpMode {
 
     private static final Handler handler = new Handler();
+    public static boolean Throw = false;
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -24,17 +25,22 @@ public class Main extends LinearOpMode {
         );
         handler.initialize_arm(
                 //for slower speed but steady change arm_rotator_motor to be DcMotorEx.class
-                hardwareMap.get(DcMotor.class, "arm_rotator_motor"),
+                hardwareMap.get(DcMotor.class, "arm_control"),
                 hardwareMap.get(DcMotor.class, "arm_extender" )
         );
-        handler.disableModule("Movement");
+
         if(opModeIsActive()) {
             while (opModeIsActive()) {
                 handler.update(gamepad1, gamepad2);
                 telemetry = handler.displayActiveModules(telemetry);
                 telemetry = handler.displayChangableVars(telemetry);
                 telemetry = handler.getTelemetry(telemetry);
+                telemetry.addData("test-T", Throw);
                 telemetry.update();
+                if (handler.Throw){
+                    throw new RuntimeException(handler.message);
+                }
+
             }
         }
     }
