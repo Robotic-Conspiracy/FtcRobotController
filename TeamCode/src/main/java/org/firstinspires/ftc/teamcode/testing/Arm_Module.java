@@ -11,7 +11,6 @@ public class Arm_Module extends RobotModule {
     private final DcMotor ArmRotationMotor;
     private final DcMotor ArmExtensionMotor;
     public static displayData dataToDisplay = displayData.objectiveInfo;
-    private static displayData lastdataToDisplay = displayData.objectiveInfo;
     public static int armRotationTargetPos;
     public static int armExtensionTargetPos;
     public static int armSpeed = 100;
@@ -87,14 +86,6 @@ public class Arm_Module extends RobotModule {
             this.ArmExtensionMotor.setTargetPosition(armExtensionTargetPos);
             this.ArmExtensionMotor.setPower(50);
             this.ArmExtensionMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-    }
-    public static boolean updateDisplay(){
-        if(lastdataToDisplay != dataToDisplay){
-            lastdataToDisplay = dataToDisplay;
-            return true;
-        } else {
-            return false;
         }
     }
     public enum displayData{
