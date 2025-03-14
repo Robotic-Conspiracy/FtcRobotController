@@ -6,7 +6,11 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+
 @Config
 public class Handler{
     public static HashMap<String, Boolean> activeModules = new HashMap<>();
@@ -17,18 +21,26 @@ public class Handler{
     private Hand hand;
     private Movement movement;
     private Arm arm;
-    public static boolean Arm_active = true;
-    public static boolean Hand_active = true;
-    public static boolean Movement_active = true;
+    public static boolean Arm_active = false;
+    public static boolean Hand_active = false;
+    public static boolean Movement_active = false;
+    public static boolean Throw = false;
+    public static String message = "";
+    public static int test = 1;
+    public static String[] test2 = {"Hello", "World"};
+    public static ArrayList<String> test3 = new ArrayList<>(Arrays.asList("test1", "test2", "test3"));
 
     public void initialize_hand(Servo hand_rotator, Servo hand_grip){
         this.hand = new Hand(hand_rotator, hand_grip);
+        Hand_active = true;
     }
     public void initialize_movement(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
         this.movement = new Movement(front_left_wheel, front_right_wheel, back_left_wheel, back_right_wheel);
+        Movement_active = true;
     }
     public void initialize_arm(DcMotor arm_rotator_motor, DcMotor arm_extender_motor){
         this.arm = new Arm(arm_rotator_motor, arm_extender_motor);
+        Arm_active = true;
     }
     /***
      *
@@ -55,6 +67,8 @@ public class Handler{
         telemetry.addData("Arm module", Arm_active);
         telemetry.addData("Hand module", Hand_active);
         telemetry.addData("Movement module", Movement_active);
+        telemetry.addData("", Throw);
+        telemetry.addData("message", message);
         return telemetry;
     }
 
