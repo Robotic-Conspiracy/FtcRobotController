@@ -72,7 +72,7 @@ public class Handler{
         return telemetry;
     }
 
-    public Telemetry displayChangableVars(Telemetry telemetry){
+    public Telemetry displayChangeableVars(Telemetry telemetry){
         telemetry.addData("Wheel speed", movement.getSpeed());
         return telemetry;
     }
