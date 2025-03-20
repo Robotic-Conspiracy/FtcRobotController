@@ -1,18 +1,24 @@
 package org.firstinspires.ftc.teamcode.testing;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.tests.Hand;
 
 @Config
 public class Handler_Module {
     public static TestType test;
-    public static Tests[] RunningTests = {Tests.autoArm, null, null};
-    private static Tests[] last = {Tests.autoArm, null, null};
-    private static final int resetDelay = 25;
-    private static int delayCount = 0;
+    public static Tests[] RunningTests = {Tests.autoArm, Tests.none, Tests.none};
+    private static Tests[] last = {Tests.autoArm, Tests.none, Tests.none};
+    private static final int resetDelayMs = 5000;
+    private Hand_module hand;
+    private static long time = System.currentTimeMillis();
+    private static long newTime = 0;
     private Arm_Module arm;
+    private Wheels_Module wheels;
     public Telemetry ResetTelemetry(Telemetry telemetry){
         telemetry.clear();
         return telemetry;
@@ -24,10 +30,11 @@ public class Handler_Module {
                 telemetry = ResetTelemetry(telemetry);
             }
         }*/
-        if (delayCount >= resetDelay){
+        if (resetDelayMs <= newTime-time){
             telemetry.clear();
+            time = System.currentTimeMillis();
         } else {
-            delayCount++;
+            newTime = System.currentTimeMillis();
         }
 
         for (int i = 0; i < RunningTests.length; i++) {
@@ -39,6 +46,12 @@ public class Handler_Module {
     }
     public void init_arm(DcMotor armExtension, DcMotor armRotation){
         this.arm = new Arm_Module(armRotation, armExtension);
+    }
+    public void init_hand(Servo servo){
+        this.hand = new Hand_module(servo);
+    }
+    public void init_wheels(DcMotor front_left_wheel, DcMotor front_right_wheel, DcMotor back_left_wheel, DcMotor back_right_wheel){
+        this.wheels = new Wheels_Module(front_left_wheel, front_right_wheel, back_left_wheel, back_right_wheel);
     }
     public enum Tests{
         autoWheels(0),
@@ -55,6 +68,12 @@ public class Handler_Module {
 
             if(RunningTests[i] == Tests.autoArm){
                 this.arm.updatePositions();
+            }
+            if(RunningTests[i] == Tests.autoGrip){
+                this.hand.updateHand();
+            }
+            if(RunningTests[i] == Tests.autoWheels){
+                this.wheels.update();
             }
         }
     }

@@ -18,6 +18,7 @@ public class Arm_Module extends RobotModule {
     public Arm_Module(DcMotor armRotation, DcMotor armExtension){
         this.ArmExtensionMotor = armExtension;
         this.ArmRotationMotor = armRotation;
+        this.ArmRotationMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
     public Telemetry getDisplayData(Telemetry telemetry){
@@ -84,8 +85,11 @@ public class Arm_Module extends RobotModule {
         }
         if(armExtensionTargetPos != this.ArmExtensionMotor.getCurrentPosition()){
             this.ArmExtensionMotor.setTargetPosition(armExtensionTargetPos);
-            this.ArmExtensionMotor.setPower(50);
+            this.ArmExtensionMotor.setPower(armSpeed/100.0);
             this.ArmExtensionMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        if (armRotationTargetPos == this.ArmRotationMotor.getCurrentPosition()){
+            this.ArmExtensionMotor.setPower(0);
         }
     }
     public enum displayData{

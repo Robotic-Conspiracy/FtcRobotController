@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Config")
 public class testing extends LinearOpMode {
@@ -21,6 +22,13 @@ public class testing extends LinearOpMode {
                 hardwareMap.get(DcMotor.class, "arm_extender" ),
                 hardwareMap.get(DcMotor.class, "arm_control")
 
+        );
+        handler.init_hand(hardwareMap.get(Servo.class, "hand_servo"));
+        handler.init_wheels(
+                hardwareMap.get(DcMotor.class, "front_left_wheel"),
+                hardwareMap.get(DcMotor.class, "front_right_wheel"),
+                hardwareMap.get(DcMotor.class, "back_left_wheel"),
+                hardwareMap.get(DcMotor.class, "back_right_wheel")
         );
         if(opModeIsActive()) {
             while (opModeIsActive()) {
