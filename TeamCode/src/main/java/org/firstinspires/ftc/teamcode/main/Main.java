@@ -37,8 +37,8 @@ public class Main extends LinearOpMode {
                 telemetry = handler.getTelemetry(telemetry);
                 telemetry.addData("test-T", Throw);
                 telemetry.update();
-                if (handler.Throw){
-                    throw new RuntimeException(handler.message);
+                if (Handler.Throw){
+                    throw new RuntimeException(Handler.message);
                 }
 
             }
