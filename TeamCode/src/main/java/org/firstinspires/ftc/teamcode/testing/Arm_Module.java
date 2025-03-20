@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.tests.RobotModule;
+import org.firstinspires.ftc.teamcode.main.RobotModule;
 
 @Config
 public class Arm_Module extends RobotModule {
