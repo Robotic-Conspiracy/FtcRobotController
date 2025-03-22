@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.main;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 @Config
 public class Handler{
@@ -72,7 +71,7 @@ public class Handler{
         return telemetry;
     }
 
-    public Telemetry displayChangableVars(Telemetry telemetry){
+    public Telemetry displayChangeableVars(Telemetry telemetry){
         telemetry.addData("Wheel speed", movement.getSpeed());
         return telemetry;
     }

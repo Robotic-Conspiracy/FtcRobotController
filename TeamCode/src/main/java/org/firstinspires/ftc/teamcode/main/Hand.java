@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.main;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -43,7 +43,7 @@ public class Hand extends RobotModule{
      *
      * @param left the thing used decrease grip strength
      * @param right the thing used to increase grip strength
-     * dont use a var that can range from -1 to 1 though might add that option later
+     * don't use a var that can range from -1 to 1 though might add that option later
      */
     public void grip(double left, double right){
         this.Hand_Grip.setPosition(

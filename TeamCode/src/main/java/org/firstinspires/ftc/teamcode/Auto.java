@@ -7,12 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.tests.Handler;
-import org.firstinspires.ftc.teamcode.tests.Movement;
+import org.firstinspires.ftc.teamcode.main.Handler;
+import org.firstinspires.ftc.teamcode.main.Movement;
 
-import java.util.HashMap;
-
-@Autonomous(name="Drive ???")
+@Autonomous(name="Drive ???", group = "old")
 public class Auto extends LinearOpMode {
     private static final Handler handler = new Handler();
     private Movement movement;

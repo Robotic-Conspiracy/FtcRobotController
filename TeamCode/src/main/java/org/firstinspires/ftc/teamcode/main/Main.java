@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.main;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "OOP Loop")
+@TeleOp(name = "main! (for real this time)")
 public class Main extends LinearOpMode {
 
     private static final Handler handler = new Handler();
@@ -37,8 +37,8 @@ public class Main extends LinearOpMode {
                 telemetry = handler.getTelemetry(telemetry);
                 telemetry.addData("test-T", Throw);
                 telemetry.update();
-                if (handler.Throw){
-                    throw new RuntimeException(handler.message);
+                if (Handler.Throw){
+                    throw new RuntimeException(Handler.message);
                 }
 
             }
